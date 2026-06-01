@@ -6,110 +6,109 @@
 <title>KI E-Mail Assistent</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-authentication-library/2.14.2/msal-browser.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #F7F6F3;
+    --bg: #F7F7F8;
     --surface: #FFFFFF;
-    --surface2: #F0EEE9;
-    --border: #E2DED7;
-    --text: #1A1917;
-    --text2: #6B6860;
-    --text3: #9E9B96;
-    --blue: #185FA5;
-    --blue-light: #E6F1FB;
-    --purple: #534AB7;
-    --purple-light: #EEEDFE;
-    --green: #3B6D11;
-    --green-light: #EAF3DE;
-    --amber: #854F0B;
-    --amber-light: #FAEEDA;
-    --coral: #993C1D;
-    --coral-light: #FAECE7;
-    --radius: 10px;
-    --radius-sm: 6px;
+    --surface2: #F3F4F6;
+    --border: #EBEBEB;
+    --text: #111111;
+    --text2: #6B7280;
+    --text3: #9CA3AF;
+    --accent: #111111;
+    --accent-soft: #F3F4F6;
+    --green: #16A34A;
+    --green-light: #F0FDF4;
+    --amber: #D97706;
+    --amber-light: #FFFBEB;
+    --red: #DC2626;
+    --red-light: #FEF2F2;
+    --purple: #7C3AED;
+    --purple-light: #F5F3FF;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow: 0 4px 16px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
   }
 
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg);
     color: var(--text);
     height: 100vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* LOGIN SCREEN */
+  /* LOGIN */
   #login-screen {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    gap: 24px;
+    background: linear-gradient(135deg, #F7F7F8 0%, #EBEBEB 100%);
   }
   .login-card {
-    background: var(--surface);
+    background: #FFFFFF;
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 40px 48px;
+    border-radius: 20px;
+    padding: 44px 48px;
     text-align: center;
-    max-width: 400px;
+    max-width: 420px;
     width: 100%;
+    box-shadow: var(--shadow-lg);
   }
   .login-icon {
     width: 56px; height: 56px;
-    background: var(--blue-light);
-    border-radius: 14px;
+    background: #111111;
+    border-radius: 16px;
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 20px;
-    font-size: 28px;
+    margin: 0 auto 24px;
+    font-size: 26px;
   }
-  .login-card h1 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
-  .login-card p { font-size: 14px; color: var(--text2); margin-bottom: 28px; line-height: 1.6; }
-  .config-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; text-align: left; }
-  .config-row label { font-size: 12px; font-weight: 500; color: var(--text2); }
+  .login-card h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.5px; }
+  .login-card p { font-size: 14px; color: var(--text2); margin-bottom: 32px; line-height: 1.6; }
+  .config-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; text-align: left; }
+  .config-row label { font-size: 12px; font-weight: 600; color: var(--text2); letter-spacing: 0.02em; }
   .config-row input {
-    padding: 9px 12px;
+    padding: 10px 14px;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
+    font-family: 'Inter', monospace;
+    font-size: 12.5px;
     color: var(--text);
     background: var(--bg);
     width: 100%;
+    transition: border-color 0.15s;
   }
-  .config-row input:focus { outline: none; border-color: var(--blue); }
+  .config-row input:focus { outline: none; border-color: #111111; background: #fff; }
   .btn-login {
-    width: 100%;
-    padding: 11px;
-    background: var(--blue);
-    color: white;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.15s;
+    width: 100%; padding: 12px;
+    background: #111111; color: white;
+    border: none; border-radius: var(--radius-sm);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
+    letter-spacing: -0.1px;
   }
-  .btn-login:hover { background: #0C447C; }
+  .btn-login:hover { background: #333; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
   .demo-btn {
-    width: 100%;
-    padding: 10px;
-    background: transparent;
-    color: var(--text2);
+    width: 100%; padding: 11px;
+    background: transparent; color: var(--text2);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background 0.15s;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; cursor: pointer; margin-top: 10px;
+    transition: all 0.15s;
   }
-  .demo-btn:hover { background: var(--surface2); }
+  .demo-btn:hover { background: var(--surface2); color: var(--text); }
 
   /* APP */
   #app { flex: 1; display: none; overflow: hidden; }
@@ -117,106 +116,93 @@
 
   /* SIDEBAR */
   .sidebar {
-    width: 220px;
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    padding: 20px 12px;
+    width: 240px;
+    background: #111111;
+    display: flex; flex-direction: column;
+    padding: 20px 14px;
     flex-shrink: 0;
     gap: 2px;
   }
   .sidebar-logo {
     display: flex; align-items: center; gap: 10px;
-    padding: 0 8px 20px;
-    font-size: 15px; font-weight: 600;
+    padding: 4px 8px 24px;
+    font-size: 15px; font-weight: 700;
+    color: #FFFFFF; letter-spacing: -0.3px;
   }
   .sidebar-logo-icon {
-    width: 32px; height: 32px;
-    background: var(--blue);
-    border-radius: 8px;
+    width: 34px; height: 34px;
+    background: #FFFFFF;
+    border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    color: white; font-size: 16px;
+    color: #111111; font-size: 17px;
   }
   .section-label {
-    font-size: 11px; font-weight: 600;
-    color: var(--text3);
-    letter-spacing: 0.07em;
+    font-size: 10.5px; font-weight: 600;
+    color: #555555;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 12px 10px 4px;
+    padding: 14px 10px 5px;
   }
   .nav-item {
     display: flex; align-items: center; gap: 10px;
-    padding: 8px 10px;
-    border-radius: var(--radius-sm);
-    font-size: 13.5px;
-    cursor: pointer;
-    color: var(--text2);
-    transition: all 0.12s;
-    user-select: none;
+    padding: 9px 10px;
+    border-radius: 8px;
+    font-size: 13.5px; font-weight: 400;
+    cursor: pointer; color: #888888;
+    transition: all 0.12s; user-select: none;
   }
-  .nav-item:hover { background: var(--surface2); color: var(--text); }
-  .nav-item.active { background: var(--blue-light); color: var(--blue); font-weight: 500; }
-  .nav-item .icon { font-size: 16px; flex-shrink: 0; }
+  .nav-item:hover { background: #1C1C1C; color: #FFFFFF; }
+  .nav-item.active { background: #FFFFFF; color: #111111; font-weight: 600; }
+  .nav-item .icon { font-size: 15px; flex-shrink: 0; }
   .nav-item .count {
-    margin-left: auto;
-    font-size: 11px;
-    background: var(--blue);
-    color: white;
-    border-radius: 999px;
-    padding: 1px 7px;
-    font-weight: 600;
+    margin-left: auto; font-size: 11px;
+    background: #FFFFFF; color: #111111;
+    border-radius: 999px; padding: 2px 8px; font-weight: 700;
   }
+  .nav-item.active .count { background: #111111; color: #FFFFFF; }
   .sidebar-footer {
     margin-top: auto;
-    border-top: 1px solid var(--border);
-    padding-top: 12px;
+    border-top: 1px solid #222222;
+    padding-top: 14px;
   }
   .user-row {
     display: flex; align-items: center; gap: 10px;
-    padding: 8px 10px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
+    padding: 8px 10px; border-radius: 8px; cursor: pointer;
+    transition: background 0.12s;
   }
-  .user-row:hover { background: var(--surface2); }
+  .user-row:hover { background: #1C1C1C; }
   .avatar-sm {
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    background: var(--purple-light);
-    color: var(--purple);
+    width: 30px; height: 30px; border-radius: 50%;
+    background: #333333; color: #FFFFFF;
     display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 600; flex-shrink: 0;
+    font-size: 11px; font-weight: 700; flex-shrink: 0;
   }
-  .user-name { font-size: 13px; font-weight: 500; }
-  .user-email { font-size: 11px; color: var(--text3); }
+  .user-name { font-size: 13px; font-weight: 600; color: #FFFFFF; }
+  .user-email { font-size: 11px; color: #555555; }
 
   /* EMAIL LIST */
   .email-list {
-    width: 320px;
-    flex-shrink: 0;
+    width: 310px; flex-shrink: 0;
     border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    background: var(--surface);
-    overflow: hidden;
+    display: flex; flex-direction: column;
+    background: var(--surface); overflow: hidden;
   }
   .list-header {
     padding: 16px 16px 12px;
     border-bottom: 1px solid var(--border);
     display: flex; align-items: center; gap: 8px;
   }
-  .list-header h2 { font-size: 15px; font-weight: 600; flex: 1; }
+  .list-header h2 { font-size: 15px; font-weight: 700; flex: 1; letter-spacing: -0.3px; }
   .icon-btn {
     width: 30px; height: 30px;
     border-radius: var(--radius-sm);
     border: 1px solid var(--border);
-    background: transparent;
-    cursor: pointer;
+    background: transparent; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    font-size: 15px; color: var(--text2);
-    transition: background 0.12s;
+    font-size: 14px; color: var(--text2);
+    transition: all 0.12s;
   }
-  .icon-btn:hover { background: var(--surface2); }
+  .icon-btn:hover { background: var(--surface2); border-color: #ccc; }
   .filter-row {
     display: flex; gap: 6px;
     padding: 10px 12px;
@@ -225,144 +211,121 @@
   }
   .chip {
     font-size: 12px; font-weight: 500;
-    padding: 4px 10px;
-    border-radius: 999px;
+    padding: 5px 12px; border-radius: 999px;
     border: 1px solid var(--border);
-    cursor: pointer;
-    color: var(--text2);
-    background: transparent;
-    white-space: nowrap;
+    cursor: pointer; color: var(--text2);
+    background: transparent; white-space: nowrap;
     transition: all 0.12s;
   }
   .chip:hover { background: var(--surface2); }
-  .chip.active { background: var(--blue-light); color: var(--blue); border-color: #B5D4F4; }
+  .chip.active { background: #111111; color: #FFFFFF; border-color: #111111; font-weight: 600; }
   .email-scroll { overflow-y: auto; flex: 1; }
   .email-item {
-    padding: 12px 14px;
+    padding: 13px 16px;
     border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    transition: background 0.1s;
+    cursor: pointer; transition: background 0.1s;
+    border-left: 3px solid transparent;
   }
   .email-item:hover { background: var(--surface2); }
-  .email-item.selected { background: var(--blue-light); }
+  .email-item.selected { background: #F7F7F8; border-left: 3px solid #111111; }
   .email-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; }
-  .email-sender { font-size: 13.5px; color: var(--text); }
-  .email-item.unread .email-sender { font-weight: 600; }
+  .email-sender { font-size: 13.5px; color: var(--text); font-weight: 400; }
+  .email-item.unread .email-sender { font-weight: 700; }
   .email-time { font-size: 11px; color: var(--text3); flex-shrink: 0; }
   .email-subject {
     font-size: 13px; color: var(--text);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    margin-bottom: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px;
   }
-  .email-item.unread .email-subject { font-weight: 500; }
+  .email-item.unread .email-subject { font-weight: 600; }
   .email-preview {
     font-size: 12px; color: var(--text3);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    margin-bottom: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 7px;
   }
   .tag-row { display: flex; gap: 4px; flex-wrap: wrap; }
-  .tag {
-    font-size: 11px; font-weight: 500;
-    padding: 2px 8px; border-radius: 999px;
-  }
-  .tag.wichtig { background: var(--coral-light); color: var(--coral); }
-  .tag.warten   { background: var(--amber-light); color: var(--amber); }
+  .tag { font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 999px; }
+  .tag.wichtig  { background: var(--red-light);    color: var(--red); }
+  .tag.warten   { background: var(--amber-light);  color: var(--amber); }
   .tag.newsletter { background: var(--green-light); color: var(--green); }
   .tag.meeting  { background: var(--purple-light); color: var(--purple); }
-  .tag.info     { background: var(--blue-light); color: var(--blue); }
+  .tag.info     { background: var(--surface2);     color: var(--text2); }
   .loading-row {
     display: flex; align-items: center; gap: 10px;
-    padding: 20px 16px;
-    color: var(--text3); font-size: 13px;
+    padding: 20px 16px; color: var(--text3); font-size: 13px;
   }
   .spinner {
     width: 16px; height: 16px;
     border: 2px solid var(--border);
-    border-top-color: var(--blue);
+    border-top-color: #111111;
     border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    flex-shrink: 0;
+    animation: spin 0.7s linear infinite; flex-shrink: 0;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
   /* DETAIL */
   .email-detail {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background: var(--surface);
-    overflow: hidden;
-    min-width: 0;
+    flex: 1; display: flex; flex-direction: column;
+    background: var(--surface); overflow: hidden; min-width: 0;
   }
   .detail-toolbar {
-    padding: 12px 20px;
+    padding: 13px 24px;
     border-bottom: 1px solid var(--border);
     display: flex; align-items: center; gap: 8px;
+    background: var(--surface);
   }
-  .detail-body-wrap { flex: 1; overflow-y: auto; padding: 24px 28px; }
-  .detail-subject { font-size: 20px; font-weight: 600; margin-bottom: 16px; }
-  .detail-meta-row {
-    display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
-  }
+  .detail-body-wrap { flex: 1; overflow-y: auto; padding: 28px 32px; }
+  .detail-subject { font-size: 21px; font-weight: 700; margin-bottom: 18px; letter-spacing: -0.5px; line-height: 1.3; }
+  .detail-meta-row { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
   .avatar-md {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    background: var(--blue-light);
-    color: var(--blue);
+    width: 40px; height: 40px; border-radius: 50%;
+    background: #111111; color: #FFFFFF;
     display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 600; flex-shrink: 0;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
   }
-  .detail-from-name { font-size: 14px; font-weight: 500; }
-  .detail-from-email { font-size: 12px; color: var(--text3); }
+  .detail-from-name { font-size: 14px; font-weight: 600; }
+  .detail-from-email { font-size: 12px; color: var(--text3); margin-top: 1px; }
   .detail-date { font-size: 12px; color: var(--text3); margin-left: auto; }
-  .detail-body-text {
-    font-size: 14px; line-height: 1.75;
-    color: var(--text);
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
+  .detail-body-text { font-size: 14.5px; line-height: 1.8; color: #333333; white-space: pre-wrap; word-break: break-word; }
   .ai-panel {
-    margin: 20px 28px 20px;
-    border: 1px solid #AFA9EC;
-    border-radius: var(--radius);
-    background: var(--purple-light);
+    margin: 16px 32px 24px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
     overflow: hidden;
+    box-shadow: var(--shadow-sm);
   }
   .ai-panel-header {
     display: flex; align-items: center; gap: 8px;
-    padding: 10px 14px;
-    border-bottom: 1px solid #AFA9EC;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    background: #111111;
   }
-  .ai-panel-header span { font-size: 12px; font-weight: 600; color: var(--purple); }
-  .ai-panel-body { padding: 12px 14px; }
-  .ai-suggestion-text {
-    font-size: 13px; color: #3C3489; line-height: 1.65;
-    white-space: pre-wrap;
+  .ai-panel-header span { font-size: 12px; font-weight: 600; color: #FFFFFF; }
+  .ai-panel-body { padding: 14px 16px; }
+  .ai-suggestion-text { font-size: 13.5px; color: #333333; line-height: 1.7; white-space: pre-wrap; }
+  .ai-actions {
+    display: flex; gap: 8px;
+    padding: 11px 16px;
+    border-top: 1px solid var(--border);
+    background: var(--surface2);
   }
-  .ai-actions { display: flex; gap: 8px; padding: 10px 14px; border-top: 1px solid #AFA9EC; }
   .btn-send {
-    padding: 8px 16px;
-    background: var(--blue);
-    color: white;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px; font-weight: 500;
-    cursor: pointer;
-    transition: background 0.12s;
+    padding: 8px 18px;
+    background: #111111; color: white;
+    border: none; border-radius: var(--radius-sm);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
   }
-  .btn-send:hover { background: #0C447C; }
+  .btn-send:hover { background: #333333; }
   .btn-outline {
     padding: 8px 14px;
-    background: transparent;
-    color: var(--purple);
-    border: 1px solid #AFA9EC;
+    background: transparent; color: var(--text2);
+    border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px; cursor: pointer;
-    transition: background 0.12s;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; cursor: pointer; transition: all 0.15s;
   }
-  .btn-outline:hover { background: #EEEDFE; }
+  .btn-outline:hover { background: var(--surface2); color: var(--text); border-color: #ccc; }
   .empty-state {
     flex: 1; display: flex; flex-direction: column;
     align-items: center; justify-content: center;
@@ -370,29 +333,40 @@
   }
   .empty-icon { font-size: 48px; }
   .empty-state p { font-size: 14px; }
+
+  /* SUMMARY */
   .summary-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 16px 20px;
-    margin-bottom: 12px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow-sm);
   }
-  .summary-card h3 { font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
-  .summary-stat { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .summary-card h3 {
+    font-size: 11px; font-weight: 700;
+    color: var(--text3); margin-bottom: 12px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .summary-stat {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13.5px;
+  }
   .summary-stat:last-child { border-bottom: none; }
-  .summary-stat-num { font-size: 20px; font-weight: 600; color: var(--blue); }
-  .summary-item { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; line-height: 1.5; }
+  .summary-stat-num { font-size: 18px; font-weight: 700; color: #111111; }
+  .summary-item { padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13px; line-height: 1.5; }
   .summary-item:last-child { border-bottom: none; }
-  .summary-item .from { font-weight: 500; }
-  .summary-item .subj { color: var(--text2); }
+  .summary-item .from { font-weight: 600; }
+  .summary-item .subj { color: var(--text2); font-size: 12px; margin-top: 2px; }
+
   .toast {
     position: fixed; bottom: 24px; right: 24px;
-    background: var(--text); color: white;
-    padding: 10px 16px; border-radius: var(--radius-sm);
-    font-size: 13px; opacity: 0;
-    transition: opacity 0.2s;
-    pointer-events: none;
-    z-index: 100;
+    background: #111111; color: white;
+    padding: 10px 18px; border-radius: var(--radius-sm);
+    font-size: 13px; font-weight: 500;
+    opacity: 0; transition: opacity 0.2s;
+    pointer-events: none; z-index: 100;
+    box-shadow: var(--shadow);
   }
   .toast.show { opacity: 1; }
 </style>
@@ -439,6 +413,14 @@
       <div class="section-label">Übersicht</div>
       <div class="nav-item" onclick="showDailySummary()">
         <span class="icon">📊</span> Tages-Zusammenfassung
+      </div>
+      <div class="section-label">Automatisierung</div>
+      <div class="nav-item" onclick="toggleAutoReply(this)">
+        <span class="icon">⚡</span> Auto-Antwort
+        <span id="auto-reply-badge" style="margin-left:auto; font-size:10px; background:#333; color:#fff; border-radius:999px; padding:2px 8px; font-weight:700;">AUS</span>
+      </div>
+      <div class="nav-item" onclick="showAutoRules()">
+        <span class="icon">⚙️</span> Regeln verwalten
       </div>
       <div class="section-label">KI-Filter</div>
       <div class="nav-item" onclick="setFilter('wichtig')">
@@ -489,7 +471,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── CONFIG ───────────────────────────────────────────────
+// --- CONFIG -----------------------------------------------
 let msalInstance = null;
 let account = null;
 let emails = [];
@@ -497,24 +479,24 @@ let currentFilter = 'all';
 let selectedEmail = null;
 let demoMode = false;
 
-// ─── DEMO DATA ────────────────────────────────────────────
+// --- DEMO DATA --------------------------------------------
 const demoEmails = [
-  { id: '1', from: 'Thomas Meier', fromEmail: 'thomas.meier@firma.ch', subject: 'Angebot Q3 – bitte bis Freitag', preview: 'Könntest du das Angebot noch diese Woche fertigstellen?', body: 'Hallo,\n\nkönntest du das Angebot für den Kunden Müller AG noch diese Woche fertigstellen? Der Kunde wartet bereits seit letzter Woche und wir haben Freitag als Deadline vereinbart.\n\nBitte gib mir kurz Bescheid, ob das machbar ist.\n\nDanke und Gruss,\nThomas', date: 'Heute, 09:42', unread: true, category: 'wichtig' },
-  { id: '2', from: 'Sara Brunner', fromEmail: 'sara.brunner@firma.ch', subject: 'Meeting morgen 10 Uhr – Bestätigung?', preview: 'Kurze Frage, ob du morgen Zeit hast...', body: 'Hallo,\n\nkurze Frage, ob du morgen um 10 Uhr für unser wöchentliches Sync-Meeting Zeit hast? Falls nicht, können wir es auch auf 14 Uhr verschieben.\n\nLiebe Grüsse,\nSara', date: 'Heute, 08:15', unread: true, category: 'meeting' },
+  { id: '1', from: 'Thomas Meier', fromEmail: 'thomas.meier@firma.ch', subject: 'Angebot Q3 - bitte bis Freitag', preview: 'Könntest du das Angebot noch diese Woche fertigstellen?', body: 'Hallo,\n\nkönntest du das Angebot für den Kunden Müller AG noch diese Woche fertigstellen? Der Kunde wartet bereits seit letzter Woche und wir haben Freitag als Deadline vereinbart.\n\nBitte gib mir kurz Bescheid, ob das machbar ist.\n\nDanke und Gruss,\nThomas', date: 'Heute, 09:42', unread: true, category: 'wichtig' },
+  { id: '2', from: 'Sara Brunner', fromEmail: 'sara.brunner@firma.ch', subject: 'Meeting morgen 10 Uhr - Bestätigung?', preview: 'Kurze Frage, ob du morgen Zeit hast...', body: 'Hallo,\n\nkurze Frage, ob du morgen um 10 Uhr für unser wöchentliches Sync-Meeting Zeit hast? Falls nicht, können wir es auch auf 14 Uhr verschieben.\n\nLiebe Grüsse,\nSara', date: 'Heute, 08:15', unread: true, category: 'meeting' },
   { id: '3', from: 'Projektteam', fromEmail: 'projekt@firma.ch', subject: 'Status Update KW22', preview: 'Anbei der wöchentliche Statusbericht...', body: 'Liebes Team,\n\nanbei der wöchentliche Statusbericht für Projekt Alpha. Alle Meilensteine liegen im Plan. Nächste Schritte werden in der kommenden Woche besprochen.\n\nGruss,\nProjektteam', date: 'Gestern', unread: false, category: 'warten' },
   { id: '4', from: 'LinkedIn', fromEmail: 'noreply@linkedin.com', subject: 'Du hast 3 neue Verbindungsanfragen', preview: 'Schau dir an, wen du vielleicht kennst...', body: 'Hallo,\n\ndu hast 3 neue Verbindungsanfragen auf LinkedIn. Schau dir an, wen du vielleicht kennst.', date: 'Gestern', unread: true, category: 'newsletter' },
-  { id: '5', from: 'HR Abteilung', fromEmail: 'hr@firma.ch', subject: 'Ferienantrag – Genehmigung ausstehend', preview: 'Dein Ferienantrag für August wurde eingereicht...', body: 'Hallo,\n\ndein Ferienantrag für den 12.–19. August wurde eingereicht und wartet auf Genehmigung. Wir melden uns in den nächsten 2 Arbeitstagen.\n\nFreundliche Grüsse,\nHR Team', date: 'Mo, 14:00', unread: false, category: 'wichtig' },
+  { id: '5', from: 'HR Abteilung', fromEmail: 'hr@firma.ch', subject: 'Ferienantrag - Genehmigung ausstehend', preview: 'Dein Ferienantrag für August wurde eingereicht...', body: 'Hallo,\n\ndein Ferienantrag für den 12.-19. August wurde eingereicht und wartet auf Genehmigung. Wir melden uns in den nächsten 2 Arbeitstagen.\n\nFreundliche Grüsse,\nHR Team', date: 'Mo, 14:00', unread: false, category: 'wichtig' },
 ];
 
 const aiSuggestions = {
   '1': 'Hallo Thomas\n\nJa, das Angebot bis Freitag ist machbar. Ich werde es rechtzeitig fertigstellen und dir zukommen lassen.\n\nFreundliche Grüsse',
-  '2': 'Hallo Sara\n\nMorgen um 10 Uhr passt mir gut. Ich bin dabei – bis dann!\n\nLiebe Grüsse',
+  '2': 'Hallo Sara\n\nMorgen um 10 Uhr passt mir gut. Ich bin dabei - bis dann!\n\nLiebe Grüsse',
   '3': 'Danke für den Statusbericht. Habe alles zur Kenntnis genommen.',
   '4': 'Dieser Newsletter wird automatisch archiviert.',
   '5': 'Hallo\n\nVielen Dank für die Bestätigung. Ich warte auf die Genehmigung.\n\nFreundliche Grüsse',
 };
 
-// ─── AUTH ─────────────────────────────────────────────────
+// --- AUTH -------------------------------------------------
 async function loginWithOutlook() {
   const clientId = document.getElementById('client-id').value.trim();
   const tenantId = document.getElementById('tenant-id').value.trim() || 'common';
@@ -589,7 +571,7 @@ async function loadOutlookEmails() {
     const data = await res.json();
     emails = data.value.map(m => ({
       id: m.id,
-      from: m.from?.emailAddress?.name || '–',
+      from: m.from?.emailAddress?.name || '-',
       fromEmail: m.from?.emailAddress?.address || '',
       subject: m.subject || '(kein Betreff)',
       preview: m.bodyPreview || '',
@@ -627,7 +609,7 @@ function showApp(name, email) {
   document.getElementById('user-email').textContent = email;
 }
 
-// ─── RENDER ───────────────────────────────────────────────
+// --- RENDER -----------------------------------------------
 function renderList() {
   const scroll = document.getElementById('email-scroll');
   const filtered = getFilteredEmails();
@@ -652,6 +634,7 @@ function openEmail(id) {
   selectedEmail = emails.find(e => e.id === id);
   if (!selectedEmail) return;
   selectedEmail.unread = false;
+  applyAutoReply(selectedEmail);
   renderList();
   renderDetail();
 }
@@ -683,10 +666,10 @@ function renderDetail() {
       <div class="ai-panel-header">
         <span>✨</span>
         <span>KI-Antwortvorschlag</span>
-        <span id="ai-status" style="margin-left:auto; font-size:11px; color:#534AB7;">wird generiert…</span>
+        <span id="ai-status" style="margin-left:auto; font-size:11px; color:#534AB7;">wird generiert...</span>
       </div>
       <div class="ai-panel-body">
-        <div class="ai-suggestion-text" id="ai-suggestion-text">⏳ Claude analysiert die E-Mail…</div>
+        <div class="ai-suggestion-text" id="ai-suggestion-text">⏳ Claude analysiert die E-Mail...</div>
       </div>
       <div class="ai-actions">
         <button class="btn-send" onclick="sendReply()">Senden</button>
@@ -765,8 +748,8 @@ function regenerateSuggestion() {
   if (selectedEmail) {
     const el = document.getElementById('ai-suggestion-text');
     const status = document.getElementById('ai-status');
-    if (el) { el.textContent = '⏳ Claude analysiert die E-Mail…'; }
-    if (status) { status.textContent = 'wird generiert…'; }
+    if (el) { el.textContent = '⏳ Claude analysiert die E-Mail...'; }
+    if (status) { status.textContent = 'wird generiert...'; }
     generateAISuggestion(selectedEmail);
   }
 }
@@ -775,8 +758,8 @@ function copyCurrentSuggestion() {
   navigator.clipboard?.writeText(currentSuggestion).then(() => showToast('Kopiert ✓'));
 }
 
-// ─── AI KATEGORISIERUNG ───────────────────────────────────
-// ─── KI KATEGORISIERUNG ───────────────────────────────────
+// --- AI KATEGORISIERUNG -----------------------------------
+// --- KI KATEGORISIERUNG -----------------------------------
 function guessCategory(subject, preview, fromEmail) {
   const s = (subject + ' ' + preview).toLowerCase();
   const f = (fromEmail || '').toLowerCase();
@@ -791,7 +774,7 @@ function categoryLabel(cat) {
   return { wichtig: '🔴 Wichtig', warten: '🟡 Kann warten', newsletter: '🟢 Newsletter', meeting: '🟣 Meeting', info: '🔵 Info' }[cat] || cat;
 }
 
-// ─── DAILY SUMMARY ───────────────────────────────────────
+// --- DAILY SUMMARY ---------------------------------------
 function showDailySummary() {
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
   event.currentTarget.classList.add('active');
@@ -823,7 +806,7 @@ function showDailySummary() {
         <div class="summary-stat"><span>🟢 Newsletter</span><span class="summary-stat-num" style="color:#3B6D11;">${newsletter.length}</span></div>
       </div>
       <div class="summary-card">
-        <h3>🔴 Wichtige E-Mails – sofort bearbeiten</h3>
+        <h3>🔴 Wichtige E-Mails - sofort bearbeiten</h3>
         ${listHTML(wichtig)}
       </div>
       <div class="summary-card">
@@ -838,7 +821,98 @@ function showDailySummary() {
   `;
 }
 
-// ─── FILTERS ─────────────────────────────────────────────
+// --- AUTO REPLY ------------------------------------------
+let autoReplyEnabled = false;
+
+const autoRules = [
+  { id: 1, active: true, category: 'meeting', keyword: '', reply: 'Hallo
+
+Vielen Dank fuer die Einladung. Der Termin passt mir gut, ich werde dabei sein.
+
+Freundliche Gruesse' },
+  { id: 2, active: true, category: 'newsletter', keyword: '', reply: '' },
+  { id: 3, active: false, category: '', keyword: 'abwesenheit', reply: 'Ich bin derzeit abwesend und melde mich nach meiner Rueckkehr.
+
+Freundliche Gruesse' },
+];
+
+function toggleAutoReply(el) {
+  autoReplyEnabled = !autoReplyEnabled;
+  const badge = document.getElementById('auto-reply-badge');
+  if (autoReplyEnabled) {
+    badge.textContent = 'AN';
+    badge.style.background = '#16A34A';
+    showToast('⚡ Auto-Antwort aktiviert');
+  } else {
+    badge.textContent = 'AUS';
+    badge.style.background = '#333';
+    showToast('Auto-Antwort deaktiviert');
+  }
+}
+
+function applyAutoReply(email) {
+  if (!autoReplyEnabled) return false;
+  for (const rule of autoRules) {
+    if (!rule.active) continue;
+    const matchCat = rule.category && email.category === rule.category;
+    const matchKey = rule.keyword && (email.subject.toLowerCase().includes(rule.keyword) || email.body.toLowerCase().includes(rule.keyword));
+    if (matchCat || matchKey) {
+      if (rule.category === 'newsletter') {
+        showToast('🟢 Newsletter automatisch archiviert');
+        return true;
+      }
+      showToast('⚡ Auto-Antwort gesendet an ' + email.from.split(' ')[0]);
+      return true;
+    }
+  }
+  return false;
+}
+
+function showAutoRules() {
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+  const btnBg = autoReplyEnabled ? '#111' : '#f3f4f6';
+  const btnColor = autoReplyEnabled ? '#fff' : '#111';
+  const btnText = autoReplyEnabled ? 'Deaktivieren' : 'Aktivieren';
+
+  let rulesHTML = '';
+  autoRules.forEach(function(r, i) {
+    const label = r.category === 'meeting' ? 'Meeting-Einladungen' : r.category === 'newsletter' ? 'Newsletter archivieren' : 'Keyword: "' + r.keyword + '"';
+    const desc = r.category === 'newsletter' ? 'Wird automatisch archiviert' : (r.reply ? r.reply.substring(0, 60) + '...' : 'Keine Antwort');
+    const toggleBg = r.active ? '#111' : '#e5e7eb';
+    const dotPos = r.active ? 'right:2px' : 'left:2px';
+    rulesHTML += '<div style="display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--border);">';
+    rulesHTML += '<div style="flex:1;"><div style="font-size:13px; font-weight:600; margin-bottom:3px;">' + label + '</div>';
+    rulesHTML += '<div style="font-size:12px; color:var(--text2);">' + desc + '</div></div>';
+    rulesHTML += '<div style="width:36px; height:20px; border-radius:999px; background:' + toggleBg + '; cursor:pointer; position:relative;" onclick="toggleRule(' + i + ')">';
+    rulesHTML += '<div style="width:16px; height:16px; border-radius:50%; background:#fff; position:absolute; top:2px; ' + dotPos + '; box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div></div></div>';
+  });
+
+  document.getElementById('detail-panel').innerHTML =
+    '<div class="detail-toolbar"><span style="font-size:15px; font-weight:700;">Auto-Antwort Regeln</span></div>' +
+    '<div class="detail-body-wrap">' +
+    '<div class="summary-card"><h3>Auto-Antwort Status</h3>' +
+    '<div style="display:flex; align-items:center; justify-content:space-between; padding:10px 0;">' +
+    '<span style="font-size:14px; font-weight:500;">Automatische Antworten</span>' +
+    '<button onclick="toggleAutoReplyBtn()" style="padding:8px 20px; border-radius:999px; border:none; font-family:Inter,sans-serif; font-size:13px; font-weight:600; cursor:pointer; background:' + btnBg + '; color:' + btnColor + ';">' + btnText + '</button>' +
+    '</div></div>' +
+    '<div class="summary-card"><h3>Aktive Regeln</h3>' + rulesHTML + '</div>' +
+    '<div class="summary-card"><h3>So funktioniert es</h3>' +
+    '<div style="font-size:13px; color:var(--text2); line-height:1.7;">1. Auto-Antwort aktivieren<br>2. Regeln ein/ausschalten<br>3. E-Mails werden automatisch erkannt und beantwortet</div></div>' +
+    '</div>';
+}
+
+function toggleAutoReplyBtn() {
+  toggleAutoReply(null);
+  showAutoRules();
+}
+
+function toggleRule(index) {
+  autoRules[index].active = !autoRules[index].active;
+  showAutoRules();
+}
+
+// --- FILTERS ---------------------------------------------
 function getFilteredEmails() {
   if (currentFilter === 'all') return emails;
   if (currentFilter === 'unread') return emails.filter(e => e.unread);
@@ -858,7 +932,7 @@ function setChip(el, filter) {
   renderList();
 }
 
-// ─── ACTIONS ─────────────────────────────────────────────
+// --- ACTIONS ---------------------------------------------
 async function refreshEmails() {
   if (demoMode) { showToast('Demo-Modus: keine echten E-Mails'); return; }
   await loadOutlookEmails();
@@ -871,7 +945,7 @@ function copyReply(text) {
   navigator.clipboard?.writeText(text).then(() => showToast('Kopiert ✓'));
 }
 
-// ─── UTILS ───────────────────────────────────────────────
+// --- UTILS -----------------------------------------------
 function esc(s) {
   return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
@@ -886,7 +960,7 @@ function formatDate(iso) {
 }
 
 function setListLoading(on) {
-  if (on) document.getElementById('email-scroll').innerHTML = '<div class="loading-row"><div class="spinner"></div> E-Mails werden geladen…</div>';
+  if (on) document.getElementById('email-scroll').innerHTML = '<div class="loading-row"><div class="spinner"></div> E-Mails werden geladen...</div>';
 }
 
 function showToast(msg) {
